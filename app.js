@@ -36,7 +36,7 @@ import('./style.scss').then(() => {
     const codeContainer = document.createElement('div')
     codeContainer.className = 'code-container'
     codeContainer.textContent = html.replace(':lat', defaultLat).replace(':lng', defaultLng)
-    .replace(':zoom', defaultZoom).replace(':style', defaultStyle)
+        .replace(':zoom', defaultZoom).replace(':style', defaultStyle)
 
     const marker = document.createElement('div')
     marker.innerHTML = svg
