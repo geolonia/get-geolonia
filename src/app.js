@@ -29,6 +29,7 @@ btn.addEventListener('click', () => {
   mapContainer.dataset.lat = defaultLat
   mapContainer.dataset.lng = defaultLng
   mapContainer.dataset.zoom = defaultZoom
+  mapContainer.dataset.gestureHandling = 'off'
   mapContainer.dataset.marker = 'off'
 
   const codeContainer = document.createElement('div')
