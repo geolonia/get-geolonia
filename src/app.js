@@ -1,6 +1,4 @@
-import 'babel-polyfill'
 import './style.scss'
-
 import svg from './marker.svg'
 import closeSvg from './close.svg'
 import stylesControl from './stylesControl'
