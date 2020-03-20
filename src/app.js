@@ -3,6 +3,7 @@ import './style.scss'
 
 import svg from './marker.svg'
 import closeSvg from './close.svg'
+import stylesControl from './stylesControl'
 
 const defaultLat = 35.6762
 const defaultLng = 139.6503
@@ -64,11 +65,16 @@ btn.addEventListener('click', () => {
 
   const map = new window.geolonia.Map('.map-container')
 
-  map.on('moveend', () => {
-    const center = map.getCenter().toArray()
-    const zoom = map.getZoom()
+  map.on('load', () => {
+    const style = new stylesControl()
+    map.addControl(style, 'top-left')
 
-    codeContainer.textContent = html.replace(':lat', center[1])
-      .replace(':lng', center[0]).replace(':zoom', zoom)
+    map.on('moveend', () => {
+      const center = map.getCenter().toArray()
+      const zoom = map.getZoom()
+
+      codeContainer.textContent = html.replace(':lat', center[1]).replace(':lng', center[0])
+          .replace(':zoom', zoom).replace(':style', style.getStyle())
+    })
   })
 })
