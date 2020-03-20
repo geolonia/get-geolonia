@@ -35,7 +35,12 @@ btn.addEventListener('click', () => {
   const codeContainer = document.createElement('div')
   codeContainer.className = 'code-container'
   codeContainer.textContent = html.replace(':lat', defaultLat).replace(':lng', defaultLng)
-    .replace(':zoom', defaultZoom).replace(':style', defaultStyle)
+      .replace(':zoom', defaultZoom).replace(':style', defaultStyle)
+  codeContainer.addEventListener('click', (e) => {
+    const range = document.createRange()
+    range.selectNodeContents(e.target)
+    window.getSelection().addRange(range)
+  })
 
   const marker = document.createElement('div')
   marker.innerHTML = svg
