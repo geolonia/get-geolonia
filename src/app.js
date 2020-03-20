@@ -23,7 +23,7 @@ btn.addEventListener('click', () => {
   outer.id = 'geolonia-map-outer-container'
   const inner = document.createElement('div')
   inner.id = 'geolonia-map-inner-container'
-  outer.append(inner)
+  outer.appendChild(inner)
 
   const mapContainer = document.createElement('div')
   mapContainer.className = 'map-container'
@@ -56,12 +56,12 @@ btn.addEventListener('click', () => {
     document.body.removeChild(outer)
   })
 
-  inner.append(codeContainer)
-  inner.append(mapContainer)
-  inner.append(marker)
-  inner.append(close)
+  inner.appendChild(codeContainer)
+  inner.appendChild(mapContainer)
+  inner.appendChild(marker)
+  inner.appendChild(close)
 
-  document.body.append(outer)
+  document.body.appendChild(outer)
 
   const map = new window.geolonia.Map('.map-container')
 
