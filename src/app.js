@@ -70,9 +70,9 @@ btn.addEventListener('click', () => {
 
     map.on('moveend', () => {
       const center = map.getCenter().toArray()
-      const zoom = map.getZoom()
+      const zoom = map.getZoom().toFixed(2)
 
-      codeContainer.textContent = html.replace(':lat', center[1]).replace(':lng', center[0])
+      codeContainer.innerText = html.replace(':lat', center[1]).replace(':lng', center[0])
           .replace(':zoom', zoom).replace(':style', style.getStyle())
     })
   })
