@@ -14,77 +14,91 @@ const html = '<div class="geolonia" data-lat=":lat" data-lng=":lng" data-zoom=":
 
 const btn = document.getElementById('get-geolonia')
 
-btn.addEventListener('click', () => {
-  if (document.getElementById('geolonia-map-outer-container')) {
-    document.body.removeChild(document.getElementById('geolonia-map-outer-container'))
-  }
+if (btn) {
+  btn.addEventListener('click', () => {
+    if (document.getElementById('geolonia-map-outer-container')) {
+      document.body.removeChild(document.getElementById('geolonia-map-outer-container'))
+    }
 
-  const outer = document.createElement('div')
-  outer.id = 'geolonia-map-outer-container'
-  const inner = document.createElement('div')
-  inner.id = 'geolonia-map-inner-container'
-  outer.appendChild(inner)
+    const options = {
+      lat: defaultLat,
+      lng: defaultLng,
+      zoom: defaultZoom,
+      style: defaultStyle,
+      ...btn.dataset
+    }
 
-  const mapContainer = document.createElement('div')
-  mapContainer.className = 'map-container'
-  mapContainer.dataset.geolocateControl = 'on'
-  mapContainer.dataset.lat = defaultLat
-  mapContainer.dataset.lng = defaultLng
-  mapContainer.dataset.zoom = defaultZoom
-  mapContainer.dataset.gestureHandling = 'off'
-  mapContainer.dataset.marker = 'off'
+    const outer = document.createElement('div')
+    outer.id = 'geolonia-map-outer-container'
+    const inner = document.createElement('div')
+    inner.id = 'geolonia-map-inner-container'
+    outer.appendChild(inner)
 
-  const codeContainer = document.createElement('div')
-  codeContainer.className = 'code-container'
+    const mapContainer = document.createElement('div')
+    mapContainer.className = 'map-container'
+    mapContainer.dataset.geolocateControl = 'on'
+    mapContainer.dataset.lat = defaultLat
+    mapContainer.dataset.lng = defaultLng
+    mapContainer.dataset.zoom = defaultZoom
+    mapContainer.dataset.gestureHandling = 'off'
+    mapContainer.dataset.marker = 'off'
+    mapContainer.dataset.style = options.style
 
-  const input = document.createElement('input')
-  input.className = 'html'
-  input.value = html.replace(':lat', defaultLat).replace(':lng', defaultLng)
-      .replace(':zoom', defaultZoom).replace(':style', defaultStyle)
+    const codeContainer = document.createElement('div')
+    codeContainer.className = 'code-container'
 
-  const button = document.createElement('button')
-  button.className = 'copy'
-  button.textContent = 'Copy to Clipboard'
-  button.addEventListener('click', (e) => {
-    input.select()
-    clipboard.writeText(input.value)
-  })
+    const input = document.createElement('input')
+    input.className = 'html'
+    input.value = html.replace(':lat', options.lat).replace(':lng', options.lng)
+        .replace(':zoom', options.zoom).replace(':style', options.style)
 
-  codeContainer.appendChild(input)
-  codeContainer.appendChild(button)
+    const button = document.createElement('button')
+    button.className = 'copy'
+    button.textContent = 'Copy to Clipboard'
+    button.addEventListener('click', (e) => {
+      input.select()
+      clipboard.writeText(input.value)
+    })
 
-  const marker = document.createElement('div')
-  marker.innerHTML = svg
-  marker.className = 'marker'
+    codeContainer.appendChild(input)
+    codeContainer.appendChild(button)
 
-  const close = document.createElement('a')
-  close.innerHTML = closeSvg
-  close.className = 'close'
+    const marker = document.createElement('div')
+    marker.innerHTML = svg
+    marker.className = 'marker'
 
-  close.addEventListener('click', () => {
-    const outer = document.getElementById('geolonia-map-outer-container')
-    document.body.removeChild(outer)
-  })
+    const close = document.createElement('a')
+    close.innerHTML = closeSvg
+    close.className = 'close'
 
-  inner.appendChild(codeContainer)
-  inner.appendChild(mapContainer)
-  inner.appendChild(marker)
-  inner.appendChild(close)
+    close.addEventListener('click', () => {
+      const outer = document.getElementById('geolonia-map-outer-container')
+      document.body.removeChild(outer)
+    })
 
-  document.body.appendChild(outer)
+    inner.appendChild(codeContainer)
+    inner.appendChild(mapContainer)
+    inner.appendChild(marker)
+    inner.appendChild(close)
 
-  const map = new window.geolonia.Map('.map-container')
+    document.body.appendChild(outer)
 
-  map.on('load', () => {
-    const style = new stylesControl()
-    map.addControl(style, 'top-left')
+    const map = new window.geolonia.Map('.map-container')
 
-    map.on('moveend', () => {
-      const center = map.getCenter().toArray()
-      const zoom = map.getZoom().toFixed(2)
+    map.on('load', () => {
+      const style = new stylesControl(options.style)
+      map.addControl(style, 'top-left')
 
-      input.value = html.replace(':lat', center[1]).replace(':lng', center[0])
-          .replace(':zoom', zoom).replace(':style', style.getStyle())
+      const writeCode = () => {
+        const center = map.getCenter().toArray()
+        const zoom = map.getZoom().toFixed(2)
+
+        input.value = html.replace(':lat', center[1]).replace(':lng', center[0])
+            .replace(':zoom', zoom).replace(':style', style.getStyle())
+      }
+
+      style.getSelect().addEventListener('change', writeCode)
+      map.on('moveend', writeCode)
     })
   })
-})
+}
