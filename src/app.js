@@ -74,6 +74,11 @@ const app = (btn) => {
       document.body.removeChild(outer)
     })
 
+    const link = document.createElement('a')
+    link.href = 'https://app.geolonia.com/#/signup'
+    link.textContent = 'Do you have an API key?'
+    codeContainer.appendChild(link)
+
     inner.appendChild(codeContainer)
     inner.appendChild(mapContainer)
     inner.appendChild(marker)
