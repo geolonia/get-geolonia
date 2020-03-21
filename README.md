@@ -7,8 +7,8 @@ https://geolonia.github.io/get-geolonia/app.js
 ## Install
 
 ```html
-<button id="get-geolonia">Get Geolonia</button>
+<p><button class="launch-get-geolonia">Get Geolonia</button></p>
 
 <script type="text/javascript" src="https://api.geolonia.com/v1/embed?geolonia-api-key=YOUR-API-KEY"></script>
-<script src="https://geolonia.github.io/get-geolonia/app.js"></script>
+<script type="text/javascript" src="https://geolonia.github.io/get-geolonia/app.js"></script>
 ```
