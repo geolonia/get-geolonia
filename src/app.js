@@ -1,3 +1,5 @@
+import * as clipboard from 'clipboard-polyfill'
+
 import './style.scss'
 import svg from './marker.svg'
 import closeSvg from './close.svg'
@@ -34,13 +36,22 @@ btn.addEventListener('click', () => {
 
   const codeContainer = document.createElement('div')
   codeContainer.className = 'code-container'
-  codeContainer.textContent = html.replace(':lat', defaultLat).replace(':lng', defaultLng)
+
+  const input = document.createElement('input')
+  input.className = 'html'
+  input.value = html.replace(':lat', defaultLat).replace(':lng', defaultLng)
       .replace(':zoom', defaultZoom).replace(':style', defaultStyle)
-  codeContainer.addEventListener('click', (e) => {
-    const range = document.createRange()
-    range.selectNodeContents(e.target)
-    window.getSelection().addRange(range)
+
+  const button = document.createElement('button')
+  button.className = 'copy'
+  button.textContent = 'Copy to Clipboard'
+  button.addEventListener('click', (e) => {
+    input.select()
+    clipboard.writeText(input.value)
   })
+
+  codeContainer.appendChild(input)
+  codeContainer.appendChild(button)
 
   const marker = document.createElement('div')
   marker.innerHTML = svg
@@ -72,7 +83,7 @@ btn.addEventListener('click', () => {
       const center = map.getCenter().toArray()
       const zoom = map.getZoom().toFixed(2)
 
-      codeContainer.innerText = html.replace(':lat', center[1]).replace(':lng', center[0])
+      input.value = html.replace(':lat', center[1]).replace(':lng', center[0])
           .replace(':zoom', zoom).replace(':style', style.getStyle())
     })
   })
