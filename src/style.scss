@@ -78,6 +78,8 @@
     display: block;
     z-index: 9999;
     cursor: pointer;
+    text-decoration: none;
+    border: none;
   }
 
   .marker path
@@ -112,5 +114,7 @@
     display: inline-block;
     font-size: 14px;
     margin: 0;
+    text-decoration: none;
+    border: none;
   }
 }
