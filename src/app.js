@@ -12,9 +12,7 @@ const defaultStyle = 'geolonia/basic'
 
 const html = '<div class="geolonia" data-lat=":lat" data-lng=":lng" data-zoom=":zoom" data-style=":style"></div>'
 
-const btn = document.getElementById('get-geolonia')
-
-if (btn) {
+const app = (btn) => {
   btn.addEventListener('click', () => {
     if (document.getElementById('geolonia-map-outer-container')) {
       document.body.removeChild(document.getElementById('geolonia-map-outer-container'))
@@ -102,3 +100,9 @@ if (btn) {
     })
   })
 }
+
+const btns = document.getElementsByClassName('launch-get-geolonia')
+
+btns.forEach(btn => {
+  app(btn)
+})
