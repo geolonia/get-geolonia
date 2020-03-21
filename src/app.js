@@ -46,12 +46,12 @@ const app = (btn) => {
     codeContainer.className = 'code-container'
 
     const input = document.createElement('input')
-    input.className = 'html'
+    input.className = 'get-geolonia-html'
     input.value = html.replace(':lat', options.lat).replace(':lng', options.lng)
         .replace(':zoom', options.zoom).replace(':style', options.style)
 
     const button = document.createElement('button')
-    button.className = 'copy'
+    button.className = 'get-geolonia-copy'
     button.textContent = 'Copy to Clipboard'
     button.addEventListener('click', (e) => {
       input.select()
@@ -63,11 +63,11 @@ const app = (btn) => {
 
     const marker = document.createElement('div')
     marker.innerHTML = svg
-    marker.className = 'marker'
+    marker.className = 'get-geolonia-marker'
 
     const close = document.createElement('a')
     close.innerHTML = closeSvg
-    close.className = 'close'
+    close.className = 'get-geolonia-close'
 
     close.addEventListener('click', () => {
       const outer = document.getElementById('geolonia-map-outer-container')

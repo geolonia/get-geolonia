@@ -57,7 +57,7 @@
     }
   }
 
-  .marker
+  .get-geolonia-marker
   {
     width: 48px;
     height: 48px;
@@ -68,7 +68,7 @@
     pointer-events: none;
   }
 
-  .close
+  .get-geolonia-close
   {
     width: 36px;
     height: 36px;
@@ -83,7 +83,7 @@
     z-index: 9999;
   }
 
-  .marker path
+  .get-geolonia-marker path
   {
     fill: rgba(255, 255, 255, 0.5);
   }
@@ -93,7 +93,7 @@
     top: 16px;
   }
 
-  .html
+  .get-geolonia-html
   {
     width: 100%;
     font-size: 120%;
@@ -104,7 +104,7 @@
     color: #555555;
   }
 
-  .copy
+  .get-geolonia-copy
   {
     background-color: #008CBA; /* Green */
     border: none;
