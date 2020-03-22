@@ -20,7 +20,6 @@
     width: 90%;
     height: 90%;
     background-color: #ffffff;
-    border-radius: 8px;
   }
 
   &.demonstration-mode .geolonia-map-inner-container
@@ -34,7 +33,6 @@
     padding: 0;
     margin: 0;
     height: calc(100% - 150px);
-    border-radius: 5px 5px 0 0;
     border-bottom: 1px solid #dedede;
     background-color: #ffffff;
   }
@@ -42,7 +40,6 @@
   &.demonstration-mode .map-container
   {
     height: 100%;
-    border-radius: 5px;
     border: none;
   }
 
@@ -60,7 +57,6 @@
     align-items: center;
     padding: 0 32px;
     margin: 0;
-    border-radius: 0 0 5px 5px;
     background-color: #ffffff;
 
     a {
