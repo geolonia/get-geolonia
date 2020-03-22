@@ -21,7 +21,7 @@ export default class stylesControl {
     this.container.style.margin = '8px'
     this.container.style.pointerEvents = 'auto'
 
-    this.select.style.fontSize = '120%'
+    this.select.style.fontSize = '18px'
     this.select.style.padding = '8px'
 
     for (let i = 0; i < this.styles.length; i++) {
