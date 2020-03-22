@@ -23,6 +23,7 @@ const app = (btn) => {
       lng: defaultLng,
       zoom: defaultZoom,
       style: defaultStyle,
+      demo: 'off',
       ...btn.dataset
     }
 
@@ -41,29 +42,7 @@ const app = (btn) => {
     mapContainer.dataset.gestureHandling = 'off'
     mapContainer.dataset.marker = 'off'
     mapContainer.dataset.style = options.style
-
-    const codeContainer = document.createElement('div')
-    codeContainer.className = 'code-container'
-
-    const input = document.createElement('input')
-    input.className = 'get-geolonia-html'
-    input.value = html.replace(':lat', options.lat).replace(':lng', options.lng)
-        .replace(':zoom', options.zoom).replace(':style', options.style)
-
-    const button = document.createElement('button')
-    button.className = 'get-geolonia-copy'
-    button.textContent = 'Copy to Clipboard'
-    button.addEventListener('click', (e) => {
-      input.select()
-      clipboard.writeText(input.value)
-    })
-
-    codeContainer.appendChild(input)
-    codeContainer.appendChild(button)
-
-    const marker = document.createElement('div')
-    marker.innerHTML = svg
-    marker.className = 'get-geolonia-marker'
+    mapContainer.classList.add('demonstration-mode')
 
     const close = document.createElement('a')
     close.innerHTML = closeSvg
@@ -74,35 +53,64 @@ const app = (btn) => {
       document.body.removeChild(outer)
     })
 
-    const link = document.createElement('a')
-    link.href = 'https://app.geolonia.com/#/signup'
-    link.textContent = 'Do you have an API key?'
-    codeContainer.appendChild(link)
-
-    inner.appendChild(codeContainer)
     inner.appendChild(mapContainer)
-    inner.appendChild(marker)
+    document.body.appendChild(outer)
+    const map = new window.geolonia.Map('.map-container')
     inner.appendChild(close)
 
-    document.body.appendChild(outer)
+    if ('on' === options.demo) {
+      map.on('load', () => {
+        const style = new stylesControl(options.style)
+        map.addControl(style, 'top-left')
+      })
+    } else if ('off' === options.demo) {
+      const codeContainer = document.createElement('div')
+      codeContainer.className = 'code-container'
 
-    const map = new window.geolonia.Map('.map-container')
+      const input = document.createElement('input')
+      input.className = 'get-geolonia-html'
+      input.value = html.replace(':lat', options.lat).replace(':lng', options.lng)
+          .replace(':zoom', options.zoom).replace(':style', options.style)
 
-    map.on('load', () => {
-      const style = new stylesControl(options.style)
-      map.addControl(style, 'top-left')
+      const button = document.createElement('button')
+      button.className = 'get-geolonia-copy'
+      button.textContent = 'Copy to Clipboard'
+      button.addEventListener('click', (e) => {
+        input.select()
+        clipboard.writeText(input.value)
+      })
 
-      const writeCode = () => {
-        const center = map.getCenter().toArray()
-        const zoom = map.getZoom().toFixed(2)
+      codeContainer.appendChild(input)
+      codeContainer.appendChild(button)
 
-        input.value = html.replace(':lat', center[1]).replace(':lng', center[0])
-            .replace(':zoom', zoom).replace(':style', style.getStyle())
-      }
+      const marker = document.createElement('div')
+      marker.innerHTML = svg
+      marker.className = 'get-geolonia-marker'
 
-      style.getSelect().addEventListener('change', writeCode)
-      map.on('moveend', writeCode)
-    })
+      const link = document.createElement('a')
+      link.href = 'https://app.geolonia.com/#/signup'
+      link.textContent = 'Do you have an API key?'
+      codeContainer.appendChild(link)
+
+      inner.appendChild(codeContainer)
+      inner.appendChild(marker)
+
+      map.on('load', () => {
+        const style = new stylesControl(options.style)
+        map.addControl(style, 'top-left')
+
+        const writeCode = () => {
+          const center = map.getCenter().toArray()
+          const zoom = map.getZoom().toFixed(2)
+
+          input.value = html.replace(':lat', center[1]).replace(':lng', center[0])
+              .replace(':zoom', zoom).replace(':style', style.getStyle())
+        }
+
+        style.getSelect().addEventListener('change', writeCode)
+        map.on('moveend', writeCode)
+      })
+    }
   })
 }
 
