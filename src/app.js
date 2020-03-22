@@ -29,8 +29,13 @@ const app = (btn) => {
 
     const outer = document.createElement('div')
     outer.id = 'geolonia-map-outer-container'
+
+    if ('on' === options.demo) {
+      outer.classList.add('demonstration-mode')
+    }
+
     const inner = document.createElement('div')
-    inner.id = 'geolonia-map-inner-container'
+    inner.className = 'geolonia-map-inner-container'
     outer.appendChild(inner)
 
     const mapContainer = document.createElement('div')
@@ -42,7 +47,6 @@ const app = (btn) => {
     mapContainer.dataset.gestureHandling = 'off'
     mapContainer.dataset.marker = 'off'
     mapContainer.dataset.style = options.style
-    mapContainer.classList.add('demonstration-mode')
 
     const close = document.createElement('a')
     close.innerHTML = closeSvg

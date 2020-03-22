@@ -8,7 +8,7 @@
   right: 0;
   z-index: 999999;
 
-  #geolonia-map-inner-container
+  .geolonia-map-inner-container
   {
     position: absolute;
     top: 0;
@@ -16,10 +16,16 @@
     right: 0;
     bottom: 0;
     margin: auto;
+    padding: 0;
     width: 90%;
     height: 90%;
     background-color: #ffffff;
     border-radius: 8px;
+  }
+
+  &.demonstration-mode #geolonia-map-inner-container
+  {
+    background-color: transparent;
   }
 
   .map-container
@@ -33,10 +39,11 @@
     background-color: #ffffff;
   }
 
-  .map-container.demonstration-mode
+  &.demonstration-mode .map-container
   {
     height: 100%;
     border-radius: 5px;
+    border: none;
   }
 
   .code-container
