@@ -33,6 +33,7 @@
     padding: 0;
     margin: 0;
     height: calc(100% - 150px);
+    border: none;
     border-bottom: 1px solid #dedede;
     background-color: #ffffff;
   }
@@ -41,6 +42,7 @@
   {
     height: 100%;
     border: none;
+    background-color: transparent;
   }
 
   .code-container
