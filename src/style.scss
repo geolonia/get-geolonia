@@ -127,4 +127,16 @@
     text-decoration: none;
     border: none;
   }
+
+  .mapbox-gl-control-select-style
+  {
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 18px;
+    height: 36px;
+    box-sizing: border-box;
+    border: 1px solid #cccccc;
+    border-radius: 0;
+    outline: none;
+  }
 }

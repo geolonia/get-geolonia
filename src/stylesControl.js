@@ -16,13 +16,11 @@ export default class stylesControl {
     this.map = map
     this.container = document.createElement('div')
     this.select = document.createElement('select')
+    this.select.className = 'mapbox-gl-control-select-style'
     this.container.appendChild(this.select)
 
     this.container.style.margin = '8px'
     this.container.style.pointerEvents = 'auto'
-
-    this.select.style.fontSize = '18px'
-    this.select.style.padding = '8px'
 
     for (let i = 0; i < this.styles.length; i++) {
       const style = this.styles[i]
