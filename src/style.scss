@@ -117,7 +117,7 @@
 
   .get-geolonia-copy
   {
-    background-color: #008CBA; /* Green */
+    background-color: #008CBA;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -128,6 +128,12 @@
     margin: 0;
     text-decoration: none;
     border: none;
+    cursor: pointer;
+  }
+
+  .get-geolonia-copy:hover
+  {
+    background-color: #003366;
   }
 
   .mapbox-gl-control-select-style
