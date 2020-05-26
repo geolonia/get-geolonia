@@ -2,6 +2,7 @@ export default class stylesControl {
   constructor(defaultStyle = 'geolonia/basic') {
     this.styles = [
       'geolonia/basic',
+      'geolonia/gsi',
       'geolonia/midnight',
       'geolonia/red-planet',
       'geolonia/notebook',
