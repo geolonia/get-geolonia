@@ -6,6 +6,7 @@ export default class stylesControl {
       'geolonia/midnight',
       'geolonia/red-planet',
       'geolonia/notebook',
+      'geolonia/homework',
     ]
 
     this.defaultStyle = defaultStyle
