@@ -1,16 +1,6 @@
 export default class stylesControl {
   constructor(defaultStyle = 'geolonia/basic') {
-    this.styles = [
-      'geolonia/basic',
-      'geolonia/gsi',
-      'geolonia/midnight',
-      'geolonia/red-planet',
-      'geolonia/notebook',
-      'geolonia/homework',
-    ]
-
     this.defaultStyle = defaultStyle
-
     this.styleUrl = 'https://raw.githubusercontent.com/%s/master/style.json'
   }
 
@@ -24,17 +14,22 @@ export default class stylesControl {
     this.container.style.margin = '8px'
     this.container.style.pointerEvents = 'auto'
 
-    for (let i = 0; i < this.styles.length; i++) {
-      const style = this.styles[i]
-      const selected = (this.defaultStyle === style)
-      this.select[i] = new Option(style, style, false, selected)
-    }
+    fetch('https://cdn.geolonia.com/style/styles.json')
+      .then((res) => {
+        return res.json()
+      }).then((styles) => {
+        for (let i = 0; i < styles.length; i++) {
+          const style = styles[i]
+          const selected = (this.defaultStyle === style)
+          this.select[i] = new Option(style, style, false, selected)
+        }
 
-    this.select.addEventListener('change', (event) => {
-      this.currentStyle = event.target.value
-      const style = this.styleUrl.replace('%s', event.target.value)
-      this.map.setStyle(style)
-    })
+        this.select.addEventListener('change', (event) => {
+          this.currentStyle = event.target.value
+          const style = this.styleUrl.replace('%s', event.target.value)
+          this.map.setStyle(style)
+        })
+      })
 
     return this.container
   }
