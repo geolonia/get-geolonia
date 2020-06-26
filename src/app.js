@@ -10,7 +10,7 @@ const defaultLng = 139.6503
 const defaultZoom = 10
 const defaultStyle = 'geolonia/basic'
 
-const html = '<div class="geolonia" data-lat=":lat" data-lng=":lng" data-zoom=":zoom" data-style=":style"></div>'
+const html = '<div class="geolonia" data-lat=":lat" data-lng=":lng" data-zoom=":zoom" data-style=":style" :additions></div>'
 
 const app = (btn) => {
   btn.addEventListener('click', () => {
@@ -26,6 +26,16 @@ const app = (btn) => {
       demo: 'off',
       ...btn.dataset
     }
+
+    // also spread optional attributes, e.g. data-geojson
+    const additionalAttributes = ["geojson"]
+    const additions = additionalAttributes.map(key => {
+      if(btn.dataset[key]) {
+        return `data-${key}="${btn.dataset.geojson}"`
+      } else {
+        return ""
+      }
+    }).join(" ")
 
     const outer = document.createElement('div')
     outer.id = 'geolonia-map-outer-container'
@@ -47,6 +57,9 @@ const app = (btn) => {
     mapContainer.dataset.gestureHandling = 'off'
     mapContainer.dataset.marker = 'off'
     mapContainer.dataset.style = options.style
+    if(btn.dataset.geojson) {
+      mapContainer.dataset.geojson = btn.dataset.geojson
+    }
 
     const close = document.createElement('a')
     close.innerHTML = closeSvg
@@ -73,8 +86,12 @@ const app = (btn) => {
 
       const input = document.createElement('input')
       input.className = 'get-geolonia-html'
-      input.value = html.replace(':lat', options.lat).replace(':lng', options.lng)
-          .replace(':zoom', options.zoom).replace(':style', options.style)
+      input.value = html
+        .replace(':lat', options.lat)
+        .replace(':lng', options.lng)
+        .replace(':zoom', options.zoom)
+        .replace(':style', options.style)
+        .replace(':additions', additions || "")
 
       const button = document.createElement('button')
       button.className = 'get-geolonia-copy'
@@ -107,8 +124,12 @@ const app = (btn) => {
           const center = map.getCenter().toArray()
           const zoom = map.getZoom().toFixed(2)
 
-          input.value = html.replace(':lat', center[1]).replace(':lng', center[0])
-              .replace(':zoom', zoom).replace(':style', style.getStyle())
+          input.value = html
+              .replace(':lat', center[1])
+              .replace(':lng', center[0])
+              .replace(':zoom', zoom)
+              .replace(':style', style.getStyle())
+              .replace(':additions', additions || "")
         }
 
         style.getSelect().addEventListener('change', writeCode)
