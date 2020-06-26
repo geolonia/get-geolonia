@@ -31,7 +31,7 @@ const app = (btn) => {
     const additionalAttributes = ["geojson"]
     const additions = additionalAttributes.map(key => {
       if(btn.dataset[key]) {
-        return `data-${key}="${btn.dataset.geojson}"`
+        return `data-${key}="${btn.dataset[key]}"`
       } else {
         return ""
       }
