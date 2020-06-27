@@ -51,9 +51,9 @@ const app = (btn) => {
     const mapContainer = document.createElement('div')
     mapContainer.className = 'map-container'
     mapContainer.dataset.geolocateControl = 'on'
-    mapContainer.dataset.lat = defaultLat
-    mapContainer.dataset.lng = defaultLng
-    mapContainer.dataset.zoom = defaultZoom
+    mapContainer.dataset.lat = options.lat
+    mapContainer.dataset.lng = options.lng
+    mapContainer.dataset.zoom = options.zoom
     mapContainer.dataset.gestureHandling = 'off'
     mapContainer.dataset.marker = 'off'
     mapContainer.dataset.style = options.style
