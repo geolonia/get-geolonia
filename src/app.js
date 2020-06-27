@@ -57,8 +57,8 @@ const app = (btn) => {
     mapContainer.dataset.gestureHandling = 'off'
     mapContainer.dataset.marker = 'off'
     mapContainer.dataset.style = options.style
-    if(btn.dataset.geojson) {
-      mapContainer.dataset.geojson = btn.dataset.geojson
+    if (options.geojson) {
+      mapContainer.dataset.geojson = options.geojson;
     }
 
     const close = document.createElement('a')
