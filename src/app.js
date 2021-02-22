@@ -47,6 +47,7 @@ const app = (btn) => {
     mapContainer.dataset.gestureHandling = 'off'
     mapContainer.dataset.marker = 'off'
     mapContainer.dataset.style = options.style
+    mapContainer.dataset.maxZoom = "20"
 
     const close = document.createElement('a')
     close.innerHTML = closeSvg
