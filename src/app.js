@@ -12,7 +12,7 @@ const defaultStyle = 'geolonia/basic'
 
 const html = '<div class="geolonia" data-lat=":lat" data-lng=":lng" data-zoom=":zoom" data-style=":style" :additions></div>'
 
-const app = (btn) => {
+const app = btn => {
   btn.addEventListener('click', () => {
     if (document.getElementById('geolonia-map-outer-container')) {
       document.body.removeChild(document.getElementById('geolonia-map-outer-container'))
@@ -24,18 +24,18 @@ const app = (btn) => {
       zoom: defaultZoom,
       style: defaultStyle,
       demo: 'off',
-      ...btn.dataset
+      ...btn.dataset,
     }
 
     // also spread optional attributes, e.g. data-geojson
-    const additionalAttributes = ["geojson"]
+    const additionalAttributes = ['geojson']
     const additions = additionalAttributes.map(key => {
-      if(btn.dataset[key]) {
+      if (btn.dataset[key]) {
         return `data-${key}="${btn.dataset[key]}"`
       } else {
-        return ""
+        return ''
       }
-    }).join(" ")
+    }).join(' ')
 
     const outer = document.createElement('div')
     outer.id = 'geolonia-map-outer-container'
@@ -57,10 +57,10 @@ const app = (btn) => {
     mapContainer.dataset.gestureHandling = 'off'
     mapContainer.dataset.marker = 'off'
     mapContainer.dataset.style = options.style
-    mapContainer.dataset.maxZoom = "20"
+    mapContainer.dataset.maxZoom = '20'
 
     if (options.geojson) {
-      mapContainer.dataset.geojson = options.geojson;
+      mapContainer.dataset.geojson = options.geojson
     }
 
     const close = document.createElement('a')
@@ -93,12 +93,14 @@ const app = (btn) => {
         .replace(':lng', options.lng)
         .replace(':zoom', options.zoom)
         .replace(':style', options.style)
-        .replace(':additions', additions || "")
+        .replace(':additions', additions || '')
 
       const button = document.createElement('button')
       button.className = 'get-geolonia-copy'
       button.textContent = 'Copy to Clipboard'
-      button.addEventListener('click', (e) => {
+
+      /* eslint no-unused-vars: 0 */
+      button.addEventListener('click', e => {
         input.select()
         clipboard.writeText(input.value)
       })
@@ -127,11 +129,11 @@ const app = (btn) => {
           const zoom = map.getZoom().toFixed(2)
 
           input.value = html
-              .replace(':lat', center[1])
-              .replace(':lng', center[0])
-              .replace(':zoom', zoom)
-              .replace(':style', style.getStyle())
-              .replace(':additions', additions || "")
+            .replace(':lat', center[1])
+            .replace(':lng', center[0])
+            .replace(':zoom', zoom)
+            .replace(':style', style.getStyle())
+            .replace(':additions', additions || '')
         }
 
         style.getSelect().addEventListener('change', writeCode)

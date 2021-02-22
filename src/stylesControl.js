@@ -15,16 +15,16 @@ export default class stylesControl {
     this.container.style.pointerEvents = 'auto'
 
     fetch('https://cdn.geolonia.com/style/styles.json')
-      .then((res) => {
+      .then(res => {
         return res.json()
-      }).then((styles) => {
+      }).then(styles => {
         for (let i = 0; i < styles.length; i++) {
           const style = styles[i]
           const selected = (this.defaultStyle === style)
           this.select[i] = new Option(style, style, false, selected)
         }
 
-        this.select.addEventListener('change', (event) => {
+        this.select.addEventListener('change', event => {
           this.currentStyle = event.target.value
           const style = this.styleUrl.replace('%s', event.target.value)
           this.map.setStyle(style)
@@ -47,7 +47,8 @@ export default class stylesControl {
   }
 
   onRemove() {
-    this.container.parentNode.removeChild(this.container);
-    this.map = undefined;
+    this.container.parentNode.removeChild(this.container)
+    /* eslint no-undefined: 0 */
+    this.map = undefined
   }
 }
