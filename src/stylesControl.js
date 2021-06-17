@@ -1,7 +1,7 @@
 export default class stylesControl {
   constructor(defaultStyle = 'geolonia/basic') {
     this.defaultStyle = defaultStyle
-    this.styleUrl = 'https://raw.githubusercontent.com/%s/master/style.json'
+    this.styleUrl = 'https://cdn.geolonia.com/style/%s/ja.json'
   }
 
   onAdd(map) {
