@@ -11,6 +11,9 @@ const defaultZoom = 10
 const defaultStyle = 'geolonia/basic'
 
 const html = '<div class="geolonia" data-lat=":lat" data-lng=":lng" data-zoom=":zoom" data-style=":style" :additions></div>'
+const kebabToCamel = (str) =>  {
+  return str.replace(/-./g, match => match[1].toUpperCase());
+}
 
 const app = btn => {
   btn.addEventListener('click', () => {
@@ -28,10 +31,13 @@ const app = btn => {
     }
 
     // also spread optional attributes, e.g. data-geojson
-    const additionalAttributes = ['geojson']
+    const additionalAttributes = ['geojson', 'simple-vector']
     const additions = additionalAttributes.map(key => {
-      if (btn.dataset[key]) {
-        return `data-${key}="${btn.dataset[key]}"`
+
+      const customAttribute = kebabToCamel(key)
+
+      if (btn.dataset[customAttribute]) {
+        return `data-${key}="${btn.dataset[customAttribute]}"`
       } else {
         return ''
       }
@@ -61,6 +67,10 @@ const app = btn => {
 
     if (options.geojson) {
       mapContainer.dataset.geojson = options.geojson
+    }
+
+    if (options.simpleVector) {
+      mapContainer.dataset.simpleVector = options.simpleVector
     }
 
     const close = document.createElement('a')
