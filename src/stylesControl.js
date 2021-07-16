@@ -28,7 +28,7 @@ export default class stylesControl {
           this.currentStyle = event.target.value
           const style = this.styleUrl.replace('%s', event.target.value)
           this.map.setStyle(style)
-        })
+        }, true)
       })
 
     return this.container
