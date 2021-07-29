@@ -10,9 +10,20 @@ const defaultLng = 139.6503
 const defaultZoom = 10
 const defaultStyle = 'geolonia/basic'
 
-const html = '<div class="geolonia" data-lat=":lat" data-lng=":lng" data-zoom=":zoom" data-style=":style" :additions></div>'
+const htmlTemplate = '<div %ATTRIBUTES%></div>'
+
 const kebabToCamel = (str) =>  {
   return str.replace(/-./g, match => match[1].toUpperCase());
+}
+
+const buildAttributeText = (options) => {
+  const attributeDenyList = ['demo']
+
+  return Object.keys(options)
+  .filter(key => !attributeDenyList.includes(key))
+  .filter(key => options[key])
+  .map(key => `data-${key}="${options[key]}"`)
+  .join(' ') || ''
 }
 
 const app = btn => {
@@ -22,6 +33,7 @@ const app = btn => {
     }
 
     const options = {
+      class: 'geolonia',
       lat: defaultLat,
       lng: defaultLng,
       zoom: defaultZoom,
@@ -30,26 +42,12 @@ const app = btn => {
       ...btn.dataset,
     }
 
-    // also spread optional attributes, e.g. data-geojson
-    const additionalAttributes = ['geojson', 'simple-vector']
-    const additions = additionalAttributes.map(key => {
-
-      const customAttribute = kebabToCamel(key)
-
-      if (btn.dataset[customAttribute]) {
-        return `data-${key}="${btn.dataset[customAttribute]}"`
-      } else {
-        return ''
-      }
-    }).join(' ')
-
     const outer = document.createElement('div')
     outer.id = 'geolonia-map-outer-container'
 
     if ('on' === options.demo) {
       outer.classList.add('demonstration-mode')
     }
-
     const inner = document.createElement('div')
     inner.className = 'geolonia-map-inner-container'
     outer.appendChild(inner)
@@ -57,21 +55,17 @@ const app = btn => {
     const mapContainer = document.createElement('div')
     mapContainer.className = 'map-container'
     mapContainer.dataset.geolocateControl = 'on'
-    mapContainer.dataset.lat = options.lat
-    mapContainer.dataset.lng = options.lng
-    mapContainer.dataset.zoom = options.zoom
     mapContainer.dataset.gestureHandling = 'off'
     mapContainer.dataset.marker = 'off'
-    mapContainer.dataset.style = options.style
     mapContainer.dataset.maxZoom = '20'
 
-    if (options.geojson) {
-      mapContainer.dataset.geojson = options.geojson
-    }
-
-    if (options.simpleVector) {
-      mapContainer.dataset.simpleVector = options.simpleVector
-    }
+    // if value === "" remove attributes from html and make it simple
+    if(options.lat) { mapContainer.dataset.lat = options.lat }
+    if(options.lng) { mapContainer.dataset.lng = options.lng }
+    if(options.zoom) { mapContainer.dataset.zoom = options.zoom }
+    if(options.style) { mapContainer.dataset.style = options.style }
+    if (options.geojson) { mapContainer.dataset.geojson = options.geojson }
+    if (options.simpleVector) { mapContainer.dataset.simpleVector = options.simpleVector }
 
     const close = document.createElement('a')
     close.innerHTML = closeSvg
@@ -98,12 +92,7 @@ const app = btn => {
 
       const input = document.createElement('input')
       input.className = 'get-geolonia-html'
-      input.value = html
-        .replace(':lat', options.lat)
-        .replace(':lng', options.lng)
-        .replace(':zoom', options.zoom)
-        .replace(':style', options.style)
-        .replace(':additions', additions || '')
+      input.value = htmlTemplate.replace('%ATTRIBUTES%', buildAttributeText(options))
 
       const button = document.createElement('button')
       button.className = 'get-geolonia-copy'
@@ -137,13 +126,13 @@ const app = btn => {
         const writeCode = () => {
           const center = map.getCenter().toArray()
           const zoom = map.getZoom().toFixed(2)
-
-          input.value = html
-            .replace(':lat', center[1])
-            .replace(':lng', center[0])
-            .replace(':zoom', zoom)
-            .replace(':style', style.getStyle())
-            .replace(':additions', additions || '')
+          const updatedOptions = {
+            ...options,
+            lng: center[0],
+            lat: center[1],
+            zoom,
+          }
+          input.value = htmlTemplate.replace('%ATTRIBUTES%', buildAttributeText(updatedOptions))
         }
 
         style.getSelect().addEventListener('change', writeCode)
