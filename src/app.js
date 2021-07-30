@@ -12,17 +12,24 @@ const defaultStyle = 'geolonia/basic'
 
 const htmlTemplate = '<div %ATTRIBUTES%></div>'
 
-const kebabToCamel = (str) =>  {
-  return str.replace(/-./g, match => match[1].toUpperCase());
+const camelToKebab = (str) =>  {
+  return str.replace(/[A-Z]/g, "-$&").toLowerCase();
 }
 
 const buildAttributeText = (options) => {
   const attributeDenyList = ['demo']
 
-  return Object.keys(options)
+  // data-marker depends on data-lat and data-lng. https://docs.geolonia.com
+  // The simpler the snipet, the better.
+  const extendedOptions = { ...options }
+  if(options.marker && (!options.lat || !options.lng)) {
+    delete extendedOptions.marker
+  }
+
+  return Object.keys(extendedOptions)
   .filter(key => !attributeDenyList.includes(key))
-  .filter(key => options[key])
-  .map(key => `data-${key}="${options[key]}"`)
+  .filter(key => extendedOptions[key])
+  .map(key => `data-${camelToKebab(key)}="${extendedOptions[key]}"`)
   .join(' ') || ''
 }
 
