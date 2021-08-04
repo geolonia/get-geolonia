@@ -29,7 +29,13 @@ const buildAttributeText = (options) => {
   return Object.keys(extendedOptions)
   .filter(key => !attributeDenyList.includes(key))
   .filter(key => extendedOptions[key])
-  .map(key => `data-${camelToKebab(key)}="${extendedOptions[key]}"`)
+  .map(key => {
+    if(key === 'class') {
+      return `class="${extendedOptions[key]}"`
+    } else {
+      return `data-${camelToKebab(key)}="${extendedOptions[key]}"`
+    }
+  })
   .join(' ') || ''
 }
 
@@ -130,9 +136,13 @@ const app = btn => {
         const style = new stylesControl(options.style)
         map.addControl(style, 'top-left')
 
-        const writeCode = () => {
+        const writeCode = (e) => {
           const center = map.getCenter().toArray()
           const zoom = map.getZoom().toFixed(2)
+          console.log(e.type, e.target.value)
+          if(e.type === 'change' && e.target.value !== defaultStyle) {
+            options.style = e.target.value
+          }
           const updatedOptions = {
             ...options,
             lng: center[0],
