@@ -4,7 +4,7 @@ import './style.scss'
 import svg from './marker.svg'
 import closeSvg from './close.svg'
 import stylesControl from './stylesControl'
-import { CommunityGeocoderControl } from './communityGeocoderControl'
+import { CommunityGeocoderControl } from './CommunityGeocoderControl'
 
 const defaultLat = 35.6762
 const defaultLng = 139.6503
