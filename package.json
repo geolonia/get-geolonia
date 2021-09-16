@@ -17,6 +17,7 @@
     "@babel/plugin-transform-classes": "^7.10.1",
     "@babel/preset-env": "^7.10.2",
     "@babel/register": "^7.10.1",
+    "@mapbox/geojson-extent": "^1.0.1",
     "babel-loader": "^8.0.4",
     "core-js": "^3.6.5",
     "css-loader": "^2.1.0",

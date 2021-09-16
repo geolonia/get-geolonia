@@ -4,6 +4,7 @@ import './style.scss'
 import svg from './marker.svg'
 import closeSvg from './close.svg'
 import stylesControl from './stylesControl'
+import { CommunityGeocoderControl } from './communityGeocoderControl'
 
 const defaultLat = 35.6762
 const defaultLng = 139.6503
@@ -17,7 +18,7 @@ const camelToKebab = (str) =>  {
 }
 
 const buildAttributeText = (options) => {
-  const attributeDenyList = ['demo']
+  const attributeDenyList = ['demo', 'geocoder']
 
   // data-marker depends on data-lat and data-lng. https://docs.geolonia.com
   // The simpler the snipet, the better.
@@ -155,6 +156,17 @@ const app = btn => {
         style.getSelect().addEventListener('change', writeCode)
         map.on('moveend', writeCode)
       })
+    }
+
+    switch (options.geocoder) {
+      case 'community-geocoder':
+        map.on('load', () => {
+          const communityGeocoderControl = new CommunityGeocoderControl(options)
+          map.addControl(communityGeocoderControl, 'bottom-left')
+        })
+        break;
+      default:
+        break;
     }
   })
 }
