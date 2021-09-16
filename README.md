@@ -32,3 +32,5 @@ https://geolonia.github.io/get-geolonia/app.js
   data-geocoder="community-geocoder" # 'community-geocoder' | 'off'
 >Get Geolonia</button>
 ```
+
+NOTE: `data-geocoder="community-geocoder"` requires community-geocoder API with `<script src="https://cdn.geolonia.com/community-geocoder.js"></script>` at first.
