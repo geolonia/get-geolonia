@@ -70,6 +70,7 @@ export class CommunityGeocoderControl {
           // eslint-disable-next-line no-console
           console.log(latlng)
           if (latlng.level === 1) {
+            console.log({latlng})
             const endpoint = 'https://geolonia.github.io/japanese-prefectural-capitals/index.json'
             fetch(endpoint).then(res => {
               return res.json()
@@ -92,19 +93,6 @@ export class CommunityGeocoderControl {
                 return res.json()
               }).then(data => {
                 this.map.fitBounds(geojsonExtent(data))
-                this.map.addLayer({
-                  id: 'japanese-administration',
-                  type: 'fill',
-                  source: {
-                    type: 'geojson',
-                    data: data,
-                  },
-                  layout: {},
-                  paint: {
-                    'fill-color': '#ff0000',
-                    'fill-opacity': 0.08,
-                  },
-                })
                 this.showMessage(`住所の判定ができなかったので「${data.features[0].properties.name}」に移動します。`)
               })
             })
